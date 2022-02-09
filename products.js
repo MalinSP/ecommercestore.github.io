@@ -1,17 +1,21 @@
-import { getElement } from "./src/getElement.js";
+import "./src/toggleSidebar.js";
+import "./src/toggleCart.js";
+import "./src/setupCart.js";
+
+//  filter imports
+import setupSearch from "./src/setupSearch.js";
+import setupCompanies from "./src/setupCompanies.js";
+import setupPrice from "./src/setupPrice.js";
+
+// specific imports
+import { store } from "./src/store.js";
 import display from "./src/display.js";
-import { store, setupStore } from "./src/setupStore.js";
+import { getElement } from "./src/utils.js";
 
-const setupSearch = (store) => {
-  const form = getElement(".input-form");
-  const nameInput = getElement(".search-input");
-  form.addEventListener("keyup", function () {
-    const value = nameInput.value;
-  });
-};
-
-// //
 const loading = getElement(".page-loading");
+
 display(store, getElement(".products-container"));
-setupStore(store);
+setupSearch(store);
+setupCompanies(store);
+setupPrice(store);
 loading.style.display = "none";

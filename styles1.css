@@ -662,9 +662,13 @@ Products Page
   border-radius: var(--radius);
   border-color: transparent;
   letter-spacing: var(--spacing);
+  width: 100%;
 }
 .search-input::placeholder {
   text-transform: capitalize;
+}
+.search-input:focus {
+  border-color: rgba(0, 0, 0, 0.2);
 }
 .company-btn {
   display: block;

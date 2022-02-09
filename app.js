@@ -1,34 +1,21 @@
-import { getElement } from "./src/getElement.js";
-import { store, setupStore } from "./src/setupStore.js";
-import { getStorageItem, setLocalStorage } from "./src/getStorage.js";
-import init from "./src/init.js";
+// global imports
+import "./src/toggleSidebar.js";
+import "./src/toggleCart.js";
+import "./src/setupCart.js";
+// specific imports
+import fetchProducts from "./src/fetch.js";
+import { setupStore, store } from "./src/store.js";
+import display from "./src/display.js";
+import { getElement } from "./src/utils.js";
 
-const toggleNav = getElement(".toggle-nav");
-const sidebarOverlay = getElement(".sidebar-overlay");
-const closeBtn = getElement(".sidebar-close");
-
-toggleNav.addEventListener("click", () => {
-  sidebarOverlay.classList.add("show");
-});
-closeBtn.addEventListener("click", () => {
-  sidebarOverlay.classList.remove("show");
-});
-
-//DOM
-window.addEventListener("DOMContentLoaded", init);
-
-// Cart
-const cartOverlay = getElement(".cart-overlay");
-const closeBtnCart = getElement(".cart-close");
-const toggleCartBtn = getElement(".toggle-cart");
-
-toggleCartBtn.addEventListener("click", () => {
-  cartOverlay.classList.add("show");
-});
-closeBtnCart.addEventListener("click", () => {
-  cartOverlay.classList.remove("show");
-});
-
-const openCart = () => {
-  cartOverlay.classList.add("show");
+const init = async () => {
+  const products = await fetchProducts();
+  if (products) {
+    // add products to the store
+    setupStore(products);
+    const featured = store.filter((product) => product.featured === true);
+    display(featured, getElement(".featured-center"));
+  }
 };
+
+window.addEventListener("DOMContentLoaded", init);
